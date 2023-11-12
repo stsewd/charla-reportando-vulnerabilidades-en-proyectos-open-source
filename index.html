@@ -21,7 +21,7 @@
 <body>
   <div class="reveal">
     <div class="slides">
-      <section class="center">
+      <section>
         <header>
           <h1>Reportando vulnerabilidades</h1>
           <h2>en proyectos Open Source</h2>
@@ -67,107 +67,134 @@
         </p>
         <aside class="notes">
           Hola, soy Santos Gallegos, soy desarrollador web, y hacker ético.
+          Contribuyo activamente a proyectos open source,
+          y he reportado vulnerabilidades en varios proyectos dentro y fuera de mi trabajo,
+          como vim, neovim, gitpython.
           Principalmente trabajo con Python y Rust.
           Actualmente trabajo en Read the Docs, soy core developer.
           Me pueden encontrar en Internet como stsewd.
         </aside>
       </section>
 
-      <section>
+      <section data-background-image="img/contribute.svg" data-background-opacity="0.3" data-background-size="contain"
+        data-transition="fade-out">
         <h2>Contribuyendo a proyectos open source</h2>
 
-        <section>
-          <ul>
-            <li>Código</li>
-            <li>Documentación</li>
-            <li>Traducciones</li>
-            <li>Reportando bugs</li>
-          </ul>
+        <ul>
+          <li>Código</li>
+          <li>Documentación</li>
+          <li>Traducciones</li>
+          <li>Reportando bugs</li>
+        </ul>
 
-          <aside class="notes">
-            Contribuir a proyectos open source es una excelente forma de
-            aprender, de hacer networking, de mejorar tu CV, y de ayudar a la
-            comunidad, de dejar de ser simplemente consumidores.
+        <aside class="notes">
+          Contribuir a proyectos open source es una excelente forma de
+          aprender, de hacer networking, de mejorar tu CV, y de ayudar a la
+          comunidad, de dejar de ser simplemente consumidores.
 
-            Se puede contribuir a un proyecto de muchas formas,
-            no necesariamente escribiendo código.
-            Por ejemplo, reportando bugs, respondiendo preguntas,
-            escribiendo documentación, traduciendo, etc.
+          Se puede contribuir a un proyecto de muchas formas,
+          no necesariamente escribiendo código.
+          Por ejemplo, reportando bugs, respondiendo preguntas,
+          escribiendo documentación, traduciendo, etc.
 
-            Y una de las formas que vamos a ver hoy es reportando bugs, especialmente bugs de seguridad.
-          </aside>
-        </section>
-
-        <section>
-          <h2 class="r-fit-text">Reportando vulnerabilidades</h2>
-        </section>
+          Y una de las formas que vamos a ver hoy es reportando bugs, especialmente bugs que pueden llevar a una
+          vulnerabilidad.
+        </aside>
       </section>
 
-      <section>
+      <section data-background-color="#1b998b" data-background-image="img/contribute.svg" data-background-opacity="0.1"
+        data-background-size="contain" data-transition="fade-in">
+        <h2>Contribuyendo a proyectos open source</h2>
+        <h2 class="r-fit-text">Reportando</h2>
+        <h2 class="r-fit-text">vulnerabilidades</h2>
+      </section>
+
+      <section data-background-color="#89CFF3" data-background-image="img/shield.png" data-background-size="400px"
+        data-background-opacity="0.5">
+        <header>
+          <h2 class="r-fit-text">Seguridad en</h2>
+          <h2 class="r-fit-text">proyectos</h2>
+          <h2 class="r-fit-text">Open source</h2>
+        </header>
+
+        <p>
+          <small>
+            <a href="https://snyk.io/reports/open-source-security/">https://snyk.io/reports/open-source-security/</a>
+          </small>
+        </p>
+
+        <aside class="notes">
+          Siempre presumimos que los proyectos open source son más seguros que los proyectos privativos,
+          el código es público, todo el mundo puede verlo, por lo que introducir una vulnerabilidad es más difícil.
+          Pero no siempre es así.
+
+          Ahí les dejo un artículo de Snyk, sobre el estado de la seguridad en proyectos open source en 2023.
+        </aside>
+      </section>
+
+      <section data-background-image="img/shield.png" data-background-size="400px" data-background-opacity="0.3">
         <h2>Seguridad en proyectos Open source</h2>
+        <h3>Vectores de ataque</h3>
+        <ul>
+          <li>
+            Acceso no autorizado al repositorio
+          </li>
+          <li>
+            Acceso no autorizado a la cuenta de un maintainer
+          </li>
+          <li>
+            Código malicioso en un pull request
+          </li>
+          <li>
+            Supply chain attacks
+          </li>
+        </ul>
 
-        <section>
-          <aside class="notes">
-            Siempre presumimos que los proyectos open source son más seguros que los proyectos privativos,
-            el código es público, todo el mundo puede verlo, por lo que introducir una vulnerabilidad es más difícil.
-            Pero no siempre es así.
-          </aside>
-        </section>
+        <aside class="notes">
+          Existen varios vectores de ataque, por ejemplo,
+          un atacante puede obtener acceso al repositorio,
+          esto puede ser por un leak de credenciales de una API,
+          explotando alguna vulnerabilidad en el CI.
+          Acceso no autorizado a la cuenta de un maintainer,
+          puede ser por un leak de credenciales,
+          take over de una cuenta de correo,
+          por ello es importante usar autenticación de dos factores.
+          Un atacante puede enviar un PR intencionadamente con un vulnerabilidad
+          (hubo el caso de una universidad que hizo esto con fines de investigación y fue baneada del kernel de Linux).
+          Supply chain attacks, que es cuando una dependencia directa o indirecta es comprometida.
+        </aside>
+      </section>
 
-        <section>
-          <h3>Vectores de ataque</h3>
-          <ul>
-            <li>
-              Acceso no autorizado al repositorio
-            </li>
-            <li>
-              Acceso no autorizado a la cuenta de un maintainer
-            </li>
-            <li>
-              Supply chain
-            </li>
-            <li>
-              Código malicioso en un pull request
-            </li>
-          </ul>
+      <section data-background-image="img/shield.png" data-background-size="400px" data-background-opacity="0.3">
+        <h2>Seguridad en proyectos Open source</h2>
+        <p>
+          Vulnerabilidades introducidas de manera no intencionada
+        </p>
 
-          <aside class="notes">
-            Existen varios vectores de ataque, por ejemplo,
-            un atacante puede obtener acceso al repositorio,
-            robar las credenciales de un colaborador,
-            o enviar un PR intencionadamente con un bug de seguridad
-            (hubo el caso de una universidad que hizo esto con fines de investigación y fue baneada del kernel de
-            linux).
-            Supply chain attacks, que es cuando una dependencia directa o indirecta es comprometida.
-          </aside>
-        </section>
+        <aside class="notes">
+          Hoy vamos a enfocarnos en bugs de seguridad, errores que se introducen de manera no intencionada,
+          y que pueden llevar a una vulnerabilidad que podría comprometer la integridad, disponibilidad o
+          confidencialidad de un sistema.
 
-        <section>
-          <p>
-            Bugs introducidos de manera no intencionada
-          </p>
+          Esto puede ser por desconocimiento, o por descuido. Errores pasan.
 
-          <aside class="notes">
-            Hoy vamos a enfocarnos en bugs, errores que se introducen de manera no intencionada,
-            y que pueden llevar a una vulnerabilidad que podría comprometer la integridad, disponibilidad o
-            confidencialidad de un sistema.
+          Los otros tipos vulnerabilidades también se pueden reportar, y seguir el mismo proceso,
+          en realidad, gran parte del proceso que vamos a ver se puede aplicar a proyectos que no son open source.
 
-            Esto puede ser por desconocimiento, o por descuido. Errores pasan.
+          Y para poder seguir presumiendo de la seguridad de los proyectos open source,
+          es importante que ayudemos encontrando, reportando y arreglando vulnerabilidades.
+          Entre más ojos mejor, la prevención es importante,
+          y hasta el uso de herramientas como fuzzers, scanners, y linters.
+        </aside>
+      </section>
 
-            Los otros tipos vulnerabilidades también se pueden reportar, y seguir el mismo proceso,
-            en realidad, gran parte del proceso que vamos a ver se puede aplicar a proyectos que no son open source.
+      <section data-background-color="#da5552">
+        <h2>Ejemplo 🐞</h2>
+        <p>
+          Vulnerabilidades introducidas de manera no intencionada
+        </p>
 
-            Y para poder seguir presumiendo de la seguridad de los proyectos open source,
-            es importante que ayudemos encontrando, reportando y arreglando estos bugs.
-          </aside>
-        </section>
-
-        <section>
-          <p>
-            Bugs introducidos de manera no intencionada
-          </p>
-
-          <pre class=""><code data-trim data-noescape class="python" data-line-numbers="1-5|3-5,7-8|3-5,10-11">
+        <pre class=""><code data-trim data-noescape class="python" data-line-numbers="1-5|3-5,7-8|3-5,10-11">
             import subprocess
 
             def clone(repo, destination):
@@ -181,20 +208,23 @@
             clone("--upload-pack=touch /tmp/pwn", "file:///foo")
           </code></pre>
 
-          <aside class="notes">
-            Por ejemplo, este código es vulnerable a un ataque de command injection.
-            Pero Santos, ese código está usando subprocess.run, que no es vulnerable a command injection.
-            Correcto, no lo es, algo como esto no funcionaría.
-            Pero la forma en la que estamos invocando git es vulnerable,
-            ya que le podemos pasar a git la opción --upload-pack, esta puede ejecutar cualquier comando.
-        </section>
+        <aside class="notes">
+          Por ejemplo, este código es vulnerable a un ataque de command injection.
+          Pero Santos, ese código está usando subprocess.run, que no es vulnerable a command injection.
+          Correcto, no lo es, algo como esto no funcionaría.
+          Pero la forma en la que estamos invocando git es vulnerable,
+          ya que le podemos hacer que git interprete el repositorio como una opción,
+          en lugar de un argumento posicional.
+          En este caso al opción --upload-pack, esta puede ejecutar cualquier comando.
+      </section>
 
-        <section>
-          <p>
-            Bugs introducidos de manera no intencionada
-          </p>
+      <section data-background-color="#1b998b">
+        <h2>Ejemplo 🐞</h2>
+        <p>
+          Vulnerabilidades introducidas de manera no intencionada
+        </p>
 
-          <pre><code data-trim data-noescape class="python" data-line-numbers="4|">
+        <pre><code data-trim data-noescape class="python" data-line-numbers="4|">
             import subprocess
 
             def clone(repo, destination):
@@ -207,71 +237,88 @@
             clone("--upload-pack=touch /tmp/pwn", "file:///foo")
           </code></pre>
 
-          <p>
-            <small>
-              <a href="https://github.com/gitpython-developers/GitPython/pull/1518">
-                https://github.com/gitpython-developers/GitPython/pull/1518
-              </a>
-            </small>
-          </p>
-
-          <aside class="notes">
-            La solución es usar -- para indicarle a git que no hay más opciones.
-            Los siguientes argumentos deben ser interpretados como argumentos posicionales.
-
-            Esta es una vulnerabilidad real, que reporté y ayudé a arreglar
-            en la librería GitPython.
-          </aside>
-        </section>
-      </section>
-
-      <section>
-        <h2>Reportando una vulnerabilidad</h2>
+        <p>
+          <small>
+            <a style="color: white;" href="https://github.com/gitpython-developers/GitPython/pull/1518">
+              https://github.com/gitpython-developers/GitPython/pull/1518
+            </a>
+          </small>
+        </p>
 
         <aside class="notes">
-          A continuación vamos a ver los pasos a seguir para reportar un bug de seguridad en un proyecto open source,
-          hasta su resolución, divulgación y posible obtención de un CVE.
+          La solución es poner un doble guión para indicarle a git que no hay más opciones,
+          y que las siguientes argumentos deben ser interpretados como argumentos posicionales.
 
-          El primer paso es haber encontrado una vulnerabilidad.
+          Esta es una vulnerabilidad real, que reporté y ayudé a arreglar
+          en la librería GitPython.
         </aside>
       </section>
 
-      <section>
+      <section data-background-color="#89CFF3">
+        <header>
+          <h2 class="r-fit-text">Reportando</h2>
+          <h2 class="r-fit-text">vulnerabilidades</h2>
+        </header>
+
+        <aside class="notes">
+          A continuación vamos a ver los pasos a seguir para reportar una vulnerabilidad en un proyecto open source,
+          hasta su resolución, divulgación y posible obtención de un CVE.
+
+          El primer paso es haber encontrado una vulnerabilidad.
+          Ya vamos a hablar un poco de como encontrar vulnerabilidades más adelante.
+        </aside>
+      </section>
+
+      <section data-background-color="#89CFF3" data-background-image="img/confidential.png" data-background-size="600px"
+        data-background-opacity="0.5">
         <h2 class="r-fit-text">
           Confidencialidad
         </h2>
         <p>
           Mantener la confidencialidad durante todo el proceso es importante
         </p>
+
+        <aside class="notes">
+          Mantener la confidencialidad durante todo el proceso es importante,
+          debemos mantener la vulnerabilidad en secreto hasta que haya sido mitigada y publicada.
+        </aside>
       </section>
 
-      <section>
+      <section data-background-color="#da5552" data-background-image="img/confidential.png" data-background-size="600px"
+        data-background-opacity="0.5">
         <header>
           <h2>Confidencialidad</h2>
           <h3>Lo que no debemos hacer</h3>
         </header>
         <ul>
           <li>Contarle a todo el mundo</li>
-          <li>Publicarlo en redes sociales como linkedin o twitter</li>
+          <li>Publicarlo en redes sociales como LinkedIn o Twitter</li>
           <li>Crear un issue o PR en el repositorio</li>
         </ul>
 
         <aside class="notes">
-          Debemos asegurarnos de reportar el bug de manera confidencial,
-          por la plataforma que el proyecto nos indique.
+          Debemos asegurarnos de reportar la vulnerabilidad de manera confidencial,
+          por el medio que el proyecto nos indique.
         </aside>
       </section>
 
-      <section>
+      <section data-background-color="#89CFF3" data-background-image="img/verfication-badge.png"
+        data-background-size="700px" data-background-opacity="0.5">
         <h2 class="r-fit-text">
           Verificación
         </h2>
         <p>
           Asegúrate que la vulnerabilidad sea real
         </p>
+
+        <aside class="notes">
+          Los errores o malentendidos pueden ocurrir, y no queremos molestar a los maintainers con
+          falsos positivos, o que gastes tu tiempo.
+        </aside>
       </section>
 
-      <section>
+      <section data-background-image="img/verfication-badge.png" data-background-size="700px"
+        data-background-opacity="0.3">
         <h2>Verificación</h2>
         <ul>
           <li>Asegúrate de usar la última version o una versión soportada</li>
@@ -305,7 +352,213 @@
         </aside>
       </section>
 
-      <section>
+      <section data-background-color="#da5552" data-transition="none-out">
+        <h2>Ejemplo 🐛</h2>
+        <p>
+          Vulnerabilidades bajo ciertas circunstancias
+        </p>
+
+        <pre class=""><code data-trim data-noescape class="python" data-line-numbers="|2,4">
+          urlpatterns = [
+              # Vulnerable a cache poisoning bajo ciertas circunstancias.
+              re_path(
+                  r"^account/security-log/",
+                  UserSecurityLog.as_view(),
+                  name="user_security_log",
+              )
+          ]
+        </code></pre>
+
+        <div class="fragment">
+          <img src="img/cf-logo.png" width="250">
+          <p>
+            <q>Cloudflare only caches based on file extension and not by MIME type. The Cloudflare CDN does not cache
+              HTML by default.</q>
+          </p>
+          <p>
+            <small>
+              <a style="color: white;"
+                href="https://developers.cloudflare.com/cache/concepts/default-cache-behavior/#default-cached-file-extensions">https://developers.cloudflare.com/cache/concepts/default-cache-behavior/#default-cached-file-extensions</a>
+            </small>
+          </p>
+
+        </div>
+
+        <aside class="notes">
+          Este es un ejemplo de un proyecto hecho en Django,
+          Lo que esto hace es que mapea la ruta /account/security-log/ a una vista,
+          esto lo hace usando una expresión regular.
+
+          Este código es vulnerable a cache poisoning bajo ciertas circunstancias.
+
+          Qué pasaría si le agregamos un CDN como Cloudflare,
+          para mejorar el performance de nuestro sitio web,
+          cachear contenido estático, como imágenes, css, js.
+
+          CF es muy bueno en ello.
+          Esto es extraído de la documentación de CF.
+          Nos dice que por defecto aplica el cache por extensión de archivo,
+          (entre ellas js, css, imágenes, etc), y también nos dice que no
+          aplica el cache a HTML por defecto. Lo cual es genial!
+          No queremos que todo el mundo vea el contenido de la página de otros usuarios.
+        </aside>
+      </section>
+
+      <section data-transition="none-in" data-background-color="#da5552">
+        <h2>Ejemplo 🐛</h2>
+        <p>
+          Vulnerabilidades bajo ciertas circunstancias
+        </p>
+
+        <pre class=""><code data-trim data-noescape class="python" data-line-numbers="2,4">
+          urlpatterns = [
+              # Vulnerable a cache poisoning bajo ciertas circunstancias.
+              re_path(
+                  r"^account/security-log/",
+                  UserSecurityLog.as_view(),
+                  name="user_security_log",
+              )
+          ]
+        </code></pre>
+
+        <div>
+          <img src="img/cf-logo.png" width="250">
+          <p>
+            <q>Cloudflare only caches <strong>based on file extension and not by MIME type</strong>. The Cloudflare CDN
+              does not cache HTML by default.</q>
+          </p>
+
+          <p>
+            <small>
+              <a style="color: white;"
+                href="https://developers.cloudflare.com/cache/concepts/default-cache-behavior/#default-cached-file-extensions">https://developers.cloudflare.com/cache/concepts/default-cache-behavior/#default-cached-file-extensions</a>
+            </small>
+          </p>
+
+        </div>
+
+        <aside class="notes">
+          Pero pongamos un poco más de atención a lo que dice la documentación.
+          Nos dice que el cache es aplicado por extensión de archivo, y no por MIME type.
+          Lo que quiere decir que si una URL termina en .js, CF va a aplicar el cache.
+        </aside>
+      </section>
+
+      <section data-background-color="#da5552">
+        <h2>Ejemplo 🐛</h2>
+        <p>
+          Vulnerabilidades bajo ciertas circunstancias
+        </p>
+
+        <pre class=""><code data-trim data-noescape class="python" data-line-numbers="2,4">
+          urlpatterns = [
+              # Vulnerable a cache poisoning bajo ciertas circunstancias.
+              re_path(
+                  r"^account/security-log/",
+                  UserSecurityLog.as_view(),
+                  name="user_security_log",
+              )
+          ]
+        </code></pre>
+
+        <pre class=""><code data-trim data-noescape class="console" data-line-numbers="1-3|5-7|9-11|13-15" style="max-height: 200px;">
+          $ curl -I https://example.com/account/security-log/
+          HTTP/2 200
+          cf-cache-status: DYNAMIC
+
+          $ curl -I https://example.com/account/security-log/foo/bar/
+          HTTP/2 200
+          cf-cache-status: DYNAMIC
+
+          $ curl https://example.com/account/security-log/foo/bar.js
+          HTTP/2 200
+          cf-cache-status: MISS
+
+          $ curl https://example.com/account/security-log/foo/bar.js
+          HTTP/2 200
+          cf-cache-status: HIT
+        </code></pre>
+
+        <aside class="notes">
+          Lo que nos lleva a la vulnerabilidad.
+          Aquí vemos un request normal a la página,
+          CF nos retorna este header indicando el estado del cache para esta página.
+          En este caso nos dice DYNAMIC, que significa que el cache no aplica a esta página.
+
+          Aquí vemos que si le agregamos cualquier cosa a la URL, el servidor nos retorna la página,
+          este es debido a que en la expresión regular no estamos validando el final de la URL,
+          toda URL que empiece con /account/security-log/ va a ser mapeada a la vista.
+
+          Pero aún vemos que la página no está siendo cacheada.
+          Gracias a que CF no aplica el cache a HTML por defecto.
+
+          Pero que pasa si le agregamos .js al final de la URL?
+          CF va a aplicar el cache, ya que la URL termina en una extensión de archivo
+          que CF aplica el cache.
+
+          En este caso tenemos MISS que significa que el cache aplica a esta página,
+          pero no fue encontrado, pero la siguiente vez que hagamos el request,
+          el contenido de la página va a ser servido desde el cache, y no desde el servidor.
+
+          Con esto podemos hacer que un usuario logeado ingrese a esta URL,
+          y su contenido sea agregado al cache de CF,
+          luego de que el usuario ingrese a la página, el atacante ingresa a la página,
+          y el contenido de la página del usuario logeado es servido desde el cache de CF.
+        </aside>
+      </section>
+
+      <section data-background-color="#1b998b">
+        <h2>Ejemplo 🐛</h2>
+        <p>
+          Vulnerabilidades bajo ciertas circunstancias
+        </p>
+
+        <pre class=""><code data-trim data-noescape class="python" data-line-numbers="|2,4">
+          urlpatterns = [
+              # Vulnerable a cache poisoning bajo ciertas circunstancias.
+              re_path(
+                  r"^account/security-log/$",
+                  UserSecurityLog.as_view(),
+                  name="user_security_log",
+              )
+          ]
+        </code></pre>
+
+        <pre class=""><code data-trim data-noescape class="console">
+          $ curl -I https://example.com/account/security-log/
+          HTTP/2 200
+          cf-cache-status: DYNAMIC
+
+          $ curl -I https://example.com/account/security-log/foo/bar/
+          HTTP/2 404
+          cf-cache-status: DYNAMIC
+
+          $ curl https://example.com/account/security-log/foo/bar.js
+          HTTP/2 404
+          cf-cache-status: DYNAMIC
+        </code></pre>
+
+        <p>
+          <small>
+            <a style="color: white;"
+              href="https://github.com/readthedocs/readthedocs.org/security/advisories/GHSA-7fcx-wwr3-99jv">https://github.com/readthedocs/readthedocs.org/security/advisories/GHSA-7fcx-wwr3-99jv</a>
+          </small>
+        </p>
+
+        <aside class="notes">
+          Esto lo podemos arreglar de varias formas,
+          una manera de arreglarlo desde el código es terminar la expresión regular con $.
+
+          De esta manera solo vamos a mapear la URL /account/security-log/ de manera exacta.
+          Los ejemplos anteriores ahora ya no funcionan, ya que la página no existe,
+          y el cache no aplica.
+
+          Esta es una vulnerabilidad real que reporté y ayudé a arreglar en mi trabajo.
+        </aside>
+      </section>
+
+      <section data-background-color="#89CFF3" data-background-image="img/security-policy.png"
+        data-background-size="250px" data-background-opacity="0.5">
         <h2 class="r-fit-text">
           Política de seguridad
         </h2>
@@ -315,9 +568,16 @@
         <p>
           Busca la política de seguridad, contacto, o medio adecuado para reportar la vulnerabilidad
         </p>
+
+        <aside class="notes">
+          Ya tenemos comprobado que la vulnerabilidad es real.
+          El siguiente paso es buscar la política de seguridad del proyecto,
+          o el medio adecuado para reportar la vulnerabilidad.
+        </aside>
       </section>
 
-      <section>
+      <section data-background-image="img/security-policy.png" data-background-size="250px"
+        data-background-opacity="0.3">
         <h2>Política / Contacto</h2>
         <p>Repositorio del proyecto</p>
         <ul>
@@ -336,7 +596,8 @@
         </aside>
       </section>
 
-      <section>
+      <section data-background-image="img/security-policy.png" data-background-size="250px"
+        data-background-opacity="0.3">
         <h2>Política / Contacto</h2>
         <p>Documentación o web principal</p>
         <ul>
@@ -345,15 +606,30 @@
             https://github.com<mark>/.well-known/security.txt</mark>
           </li>
         </ul>
+
+        <aside class="notes">
+          Si no encontramos nada en el repositorio, podemos buscar en la documentación del proyecto,
+          con palabras clave como security, vulnerability, etc.
+
+          Si el proyecto tiene una web principal, podemos buscar en el path /.well-known/security.txt,
+          es un estándar de la industria.
+        </aside>
       </section>
 
-      <section>
+      <section data-background-color="#ff9770">
         <h2>Política de seguridad</h2>
 
         <p class="r-fit-text">¡Léela!</p>
+
+        <aside class="notes">
+          Si encontramos una política de seguridad, lo primero que debemos hacer es leerla.
+          Ahí vamos a encontrar información importante, como el medio adecuado para reportar la vulnerabilidad,
+          las versiones soportadas, el tiempo de respuesta, las vulnerabilidades que son válidas, etc.
+        </aside>
       </section>
 
-      <section>
+      <section data-background-image="img/security-policy.png" data-background-size="250px"
+        data-background-opacity="0.3">
         <header>
           <h2><code>404</code></h2>
           <h2><code>Contacto Not Found</code></h2>
@@ -380,7 +656,14 @@
           </p>
           <aside class="notes">
             Si el proyecto no tiene una política de seguridad,
-            probablemente te darán un email donde reportar el bug.
+            o no la encontramos, tenemos dos opciones,
+            preguntar por el contacto en el repositorio,
+            creando un issue o enviando un correo a la lista de correos.
+
+            Recuerda que estos medios no son confidenciales,
+            no incluyas detalles de la vulnerabilidad.
+
+            Escribe algo como "Encontré una vulnerabilidad en el proyecto, ¿cual es el medio adecuado para reportarla?"
           </aside>
         </section>
 
@@ -404,12 +687,21 @@
           </p>
         </section>
         <aside class="notes">
-          No envíes el reporte sin antes asegurarte que es la persona correcta.
-          Y el medio adecuado para reportar la vulnerabilidad.
+          La otra opción es buscar un email de algún maintainer,
+          esto lo podemos hacer buscando en la documentación,
+          o en el historial de commits (git log).
+
+          Si encuentras un email,
+          no envíes el reporte sin antes asegurarte que es la persona correcta,
+          y el medio adecuado para reportar la vulnerabilidad.
+
+          Escribe algo como "Encontré una vulnerabilidad en el proyecto, ¿es este el medio adecuado para reportarla o
+          eres la persona con la que debo contactar?".
         </aside>
       </section>
 
-      <section>
+      <section data-background-color="#89CFF3" data-background-image="img/typewritter.png" data-background-size="300px"
+        data-background-opacity="0.2">
         <h2 class="r-fit-text">Reporte</h2>
         <p>
           Al final de la búsqueda, deberíamos tener un email o plataforma donde reportar la vulnerabilidad
@@ -437,6 +729,10 @@
           </li>
         </ul>
 
+        <p style="text-align: right; opacity: 0.9;">
+          <img src="img/typewritter.png" alt="" width="200">
+        </p>
+
         <aside class="notes">
           Dependiendo del proyecto, puede que tengamos disponible un template para reportar bugs de seguridad,
           o puede que no. En cualquier caso, asegúrate de incluir la mayor cantidad de información posible,
@@ -445,7 +741,6 @@
           link al código vulnerable, versiones afectadas, o hasta sugerir un parche en tu reporte.
         </aside>
       </section>
-
 
       <section>
         <h2>Reporte</h2>
@@ -460,9 +755,13 @@
           </li>
           <li>
             Como todo tipo de contribución,
-            reportar vulnerabilidad es una contribución voluntaria*
+            reportar una vulnerabilidad es una contribución voluntaria*
           </li>
         </ul>
+
+        <p style="text-align: right; opacity: 0.9;">
+          <img src="img/typewritter.png" alt="" width="200">
+        </p>
 
         <aside class="notes">
           Cuando hayas enviado el reporte, puede que tengas una respuesta en un par de días en el mejor caso.
@@ -478,7 +777,7 @@
         </aside>
       </section>
 
-      <section>
+      <section data-background-color="#89CFF3">
         <header>
           <h2 class="r-fit-text">Confirmación y</h2>
           <h2 class="r-fit-text">Mitigación</h2>
@@ -518,7 +817,7 @@
         </aside>
       </section>
 
-      <section>
+      <section data-background-color="#89CFF3">
         <header>
           <h2 class="r-fit-text">
             Divulgación
@@ -603,8 +902,13 @@
           <li>Discusiones privadas</li>
           <li>Versiones afectadas</li>
           <li>CWE, CVSS, CVE</li>
+          <li>PRs privadas</li>
           <li>Crédito a todos los involucrados</li>
         </ul>
+
+        <p style="text-align: right;">
+          <img src="img/github-mark.png" alt="" width="100">
+        </p>
 
         <aside class="notes">
           - Puedes crear un reporte de vulnerabilidad, y enviarlo al proyecto.
@@ -640,6 +944,9 @@
           </li>
         </ul>
 
+        <p style="text-align: right;">
+          <img src="img/github-mark.png" alt="" width="100">
+        </p>
         <aside class="notes">
 
           Explicar donde encontrar la pestaña de security,
@@ -653,7 +960,7 @@
         </aside>
       </section>
 
-      <section>
+      <section data-background-color="#89CFF3">
         <header>
           <h2 class="r-fit-text">Encontrando</h2>
           <h2 class="r-fit-text">Vulnerabilidades</h2>
@@ -667,7 +974,7 @@
         </aside>
       </section>
 
-      <section>
+      <section data-background-color="#1b998b">
         <h2>Encontrando vulnerabilidades</h2>
 
         <p>
@@ -681,6 +988,7 @@
           Si, puedes usar herramientas como fuzzers, scanners, y linters.
 
           Ayuda mucho que estés familiarizado con las vulnerabilidades más comunes.
+          De lo contrario puede que leas un código vulnerable y no te des cuenta.
 
           Configura tu editor o IDE, LSP, con lo que te sientas más cómodo,
           y en lugar de estar viendo tiktoks, lee código.
