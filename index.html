@@ -21,7 +21,7 @@
 <body>
   <div class="reveal">
     <div class="slides">
-      <section class="center">
+      <section>
         <header>
           <h1>Reportando vulnerabilidades</h1>
           <h2>en proyectos Open Source</h2>
@@ -76,40 +76,46 @@
         </aside>
       </section>
 
-      <section>
+      <section data-background-image="img/contribute.svg" data-background-opacity="0.3" data-background-size="contain"
+        data-transition="fade-out">
         <h2>Contribuyendo a proyectos open source</h2>
 
-        <section>
-          <ul>
-            <li>Código</li>
-            <li>Documentación</li>
-            <li>Traducciones</li>
-            <li>Reportando bugs</li>
-          </ul>
+        <ul>
+          <li>Código</li>
+          <li>Documentación</li>
+          <li>Traducciones</li>
+          <li>Reportando bugs</li>
+        </ul>
 
-          <aside class="notes">
-            Contribuir a proyectos open source es una excelente forma de
-            aprender, de hacer networking, de mejorar tu CV, y de ayudar a la
-            comunidad, de dejar de ser simplemente consumidores.
+        <aside class="notes">
+          Contribuir a proyectos open source es una excelente forma de
+          aprender, de hacer networking, de mejorar tu CV, y de ayudar a la
+          comunidad, de dejar de ser simplemente consumidores.
 
-            Se puede contribuir a un proyecto de muchas formas,
-            no necesariamente escribiendo código.
-            Por ejemplo, reportando bugs, respondiendo preguntas,
-            escribiendo documentación, traduciendo, etc.
+          Se puede contribuir a un proyecto de muchas formas,
+          no necesariamente escribiendo código.
+          Por ejemplo, reportando bugs, respondiendo preguntas,
+          escribiendo documentación, traduciendo, etc.
 
-            Y una de las formas que vamos a ver hoy es reportando bugs, especialmente bugs que pueden llevar a una
-            vulnerabilidad.
-          </aside>
-        </section>
-
-        <section>
-          <h2 class="r-fit-text">Reportando</h2>
-          <h2 class="r-fit-text">vulnerabilidades</h2>
-        </section>
+          Y una de las formas que vamos a ver hoy es reportando bugs, especialmente bugs que pueden llevar a una
+          vulnerabilidad.
+        </aside>
       </section>
 
-      <section>
-        <h2>Seguridad en proyectos Open source</h2>
+      <section data-background-color="#1b998b" data-background-image="img/contribute.svg" data-background-opacity="0.1"
+        data-background-size="contain" data-transition="fade-in">
+        <h2>Contribuyendo a proyectos open source</h2>
+        <h2 class="r-fit-text">Reportando</h2>
+        <h2 class="r-fit-text">vulnerabilidades</h2>
+      </section>
+
+      <section data-background-color="#89CFF3" data-background-image="img/shield.png" data-background-size="400px"
+        data-background-opacity="0.5">
+        <header>
+          <h2 class="r-fit-text">Seguridad en</h2>
+          <h2 class="r-fit-text">proyectos</h2>
+          <h2 class="r-fit-text">Open source</h2>
+        </header>
 
         <p>
           <small>
@@ -126,7 +132,7 @@
         </aside>
       </section>
 
-      <section>
+      <section data-background-image="img/shield.png" data-background-size="400px" data-background-opacity="0.3">
         <h2>Seguridad en proyectos Open source</h2>
         <h3>Vectores de ataque</h3>
         <ul>
@@ -154,12 +160,12 @@
           take over de una cuenta de correo,
           por ello es importante usar autenticación de dos factores.
           Un atacante puede enviar un PR intencionadamente con un vulnerabilidad
-          (hubo el caso de una universidad que hizo esto con fines de investigación y fue baneada del kernel de linux).
+          (hubo el caso de una universidad que hizo esto con fines de investigación y fue baneada del kernel de Linux).
           Supply chain attacks, que es cuando una dependencia directa o indirecta es comprometida.
         </aside>
       </section>
 
-      <section>
+      <section data-background-image="img/shield.png" data-background-size="400px" data-background-opacity="0.3">
         <h2>Seguridad en proyectos Open source</h2>
         <p>
           Vulnerabilidades introducidas de manera no intencionada
@@ -182,8 +188,8 @@
         </aside>
       </section>
 
-      <section>
-        <h2>Ejemplo 1</h2>
+      <section data-background-color="#da5552">
+        <h2>Ejemplo 🐞</h2>
         <p>
           Vulnerabilidades introducidas de manera no intencionada
         </p>
@@ -212,8 +218,8 @@
           En este caso al opción --upload-pack, esta puede ejecutar cualquier comando.
       </section>
 
-      <section>
-        <h2>Ejemplo 1</h2>
+      <section data-background-color="#1b998b">
+        <h2>Ejemplo 🐞</h2>
         <p>
           Vulnerabilidades introducidas de manera no intencionada
         </p>
@@ -233,7 +239,7 @@
 
         <p>
           <small>
-            <a href="https://github.com/gitpython-developers/GitPython/pull/1518">
+            <a style="color: white;" href="https://github.com/gitpython-developers/GitPython/pull/1518">
               https://github.com/gitpython-developers/GitPython/pull/1518
             </a>
           </small>
@@ -248,7 +254,7 @@
         </aside>
       </section>
 
-      <section>
+      <section data-background-color="#89CFF3">
         <header>
           <h2 class="r-fit-text">Reportando</h2>
           <h2 class="r-fit-text">vulnerabilidades</h2>
@@ -263,7 +269,8 @@
         </aside>
       </section>
 
-      <section>
+      <section data-background-color="#89CFF3" data-background-image="img/confidential.png" data-background-size="600px"
+        data-background-opacity="0.5">
         <h2 class="r-fit-text">
           Confidencialidad
         </h2>
@@ -277,7 +284,8 @@
         </aside>
       </section>
 
-      <section>
+      <section data-background-color="#da5552" data-background-image="img/confidential.png" data-background-size="600px"
+        data-background-opacity="0.5">
         <header>
           <h2>Confidencialidad</h2>
           <h3>Lo que no debemos hacer</h3>
@@ -294,7 +302,8 @@
         </aside>
       </section>
 
-      <section>
+      <section data-background-color="#89CFF3" data-background-image="img/verfication-badge.png"
+        data-background-size="700px" data-background-opacity="0.5">
         <h2 class="r-fit-text">
           Verificación
         </h2>
@@ -308,7 +317,8 @@
         </aside>
       </section>
 
-      <section>
+      <section data-background-image="img/verfication-badge.png" data-background-size="700px"
+        data-background-opacity="0.3">
         <h2>Verificación</h2>
         <ul>
           <li>Asegúrate de usar la última version o una versión soportada</li>
@@ -342,8 +352,8 @@
         </aside>
       </section>
 
-      <section data-transition="none">
-        <h2>Ejemplo 2</h2>
+      <section data-background-color="#da5552" data-transition="none-out">
+        <h2>Ejemplo 🐛</h2>
         <p>
           Vulnerabilidades bajo ciertas circunstancias
         </p>
@@ -367,7 +377,7 @@
           </p>
           <p>
             <small>
-              <a
+              <a style="color: white;"
                 href="https://developers.cloudflare.com/cache/concepts/default-cache-behavior/#default-cached-file-extensions">https://developers.cloudflare.com/cache/concepts/default-cache-behavior/#default-cached-file-extensions</a>
             </small>
           </p>
@@ -394,8 +404,8 @@
         </aside>
       </section>
 
-      <section data-transition="none">
-        <h2>Ejemplo 2</h2>
+      <section data-transition="none-in" data-background-color="#da5552">
+        <h2>Ejemplo 🐛</h2>
         <p>
           Vulnerabilidades bajo ciertas circunstancias
         </p>
@@ -420,7 +430,7 @@
 
           <p>
             <small>
-              <a
+              <a style="color: white;"
                 href="https://developers.cloudflare.com/cache/concepts/default-cache-behavior/#default-cached-file-extensions">https://developers.cloudflare.com/cache/concepts/default-cache-behavior/#default-cached-file-extensions</a>
             </small>
           </p>
@@ -434,8 +444,8 @@
         </aside>
       </section>
 
-      <section>
-        <h2>Ejemplo 2</h2>
+      <section data-background-color="#da5552">
+        <h2>Ejemplo 🐛</h2>
         <p>
           Vulnerabilidades bajo ciertas circunstancias
         </p>
@@ -451,7 +461,7 @@
           ]
         </code></pre>
 
-        <pre class=""><code data-trim data-noescape class="console" data-line-numbers="1-3|5-7|9-11|13-15">
+        <pre class=""><code data-trim data-noescape class="console" data-line-numbers="1-3|5-7|9-11|13-15" style="max-height: 200px;">
           $ curl -I https://example.com/account/security-log/
           HTTP/2 200
           cf-cache-status: DYNAMIC
@@ -497,8 +507,8 @@
         </aside>
       </section>
 
-      <section>
-        <h2>Ejemplo 2</h2>
+      <section data-background-color="#1b998b">
+        <h2>Ejemplo 🐛</h2>
         <p>
           Vulnerabilidades bajo ciertas circunstancias
         </p>
@@ -530,7 +540,7 @@
 
         <p>
           <small>
-            <a
+            <a style="color: white;"
               href="https://github.com/readthedocs/readthedocs.org/security/advisories/GHSA-7fcx-wwr3-99jv">https://github.com/readthedocs/readthedocs.org/security/advisories/GHSA-7fcx-wwr3-99jv</a>
           </small>
         </p>
@@ -540,14 +550,15 @@
           una manera de arreglarlo desde el código es terminar la expresión regular con $.
 
           De esta manera solo vamos a mapear la URL /account/security-log/ de manera exacta.
-          Los ejemplos anterioes ahora ya no funcionan, ya que la página no existe,
+          Los ejemplos anteriores ahora ya no funcionan, ya que la página no existe,
           y el cache no aplica.
 
           Esta es una vulnerabilidad real que reporté y ayudé a arreglar en mi trabajo.
         </aside>
       </section>
 
-      <section>
+      <section data-background-color="#89CFF3" data-background-image="img/security-policy.png"
+        data-background-size="250px" data-background-opacity="0.5">
         <h2 class="r-fit-text">
           Política de seguridad
         </h2>
@@ -565,7 +576,8 @@
         </aside>
       </section>
 
-      <section>
+      <section data-background-image="img/security-policy.png" data-background-size="250px"
+        data-background-opacity="0.3">
         <h2>Política / Contacto</h2>
         <p>Repositorio del proyecto</p>
         <ul>
@@ -584,7 +596,8 @@
         </aside>
       </section>
 
-      <section>
+      <section data-background-image="img/security-policy.png" data-background-size="250px"
+        data-background-opacity="0.3">
         <h2>Política / Contacto</h2>
         <p>Documentación o web principal</p>
         <ul>
@@ -603,7 +616,7 @@
         </aside>
       </section>
 
-      <section>
+      <section data-background-color="#ff9770">
         <h2>Política de seguridad</h2>
 
         <p class="r-fit-text">¡Léela!</p>
@@ -615,7 +628,8 @@
         </aside>
       </section>
 
-      <section>
+      <section data-background-image="img/security-policy.png" data-background-size="250px"
+        data-background-opacity="0.3">
         <header>
           <h2><code>404</code></h2>
           <h2><code>Contacto Not Found</code></h2>
@@ -686,7 +700,8 @@
         </aside>
       </section>
 
-      <section>
+      <section data-background-color="#89CFF3" data-background-image="img/typewritter.png" data-background-size="300px"
+        data-background-opacity="0.2">
         <h2 class="r-fit-text">Reporte</h2>
         <p>
           Al final de la búsqueda, deberíamos tener un email o plataforma donde reportar la vulnerabilidad
@@ -714,6 +729,10 @@
           </li>
         </ul>
 
+        <p style="text-align: right; opacity: 0.9;">
+          <img src="img/typewritter.png" alt="" width="200">
+        </p>
+
         <aside class="notes">
           Dependiendo del proyecto, puede que tengamos disponible un template para reportar bugs de seguridad,
           o puede que no. En cualquier caso, asegúrate de incluir la mayor cantidad de información posible,
@@ -722,7 +741,6 @@
           link al código vulnerable, versiones afectadas, o hasta sugerir un parche en tu reporte.
         </aside>
       </section>
-
 
       <section>
         <h2>Reporte</h2>
@@ -737,9 +755,13 @@
           </li>
           <li>
             Como todo tipo de contribución,
-            reportar vulnerabilidad es una contribución voluntaria*
+            reportar una vulnerabilidad es una contribución voluntaria*
           </li>
         </ul>
+
+        <p style="text-align: right; opacity: 0.9;">
+          <img src="img/typewritter.png" alt="" width="200">
+        </p>
 
         <aside class="notes">
           Cuando hayas enviado el reporte, puede que tengas una respuesta en un par de días en el mejor caso.
@@ -755,7 +777,7 @@
         </aside>
       </section>
 
-      <section>
+      <section data-background-color="#89CFF3">
         <header>
           <h2 class="r-fit-text">Confirmación y</h2>
           <h2 class="r-fit-text">Mitigación</h2>
@@ -795,7 +817,7 @@
         </aside>
       </section>
 
-      <section>
+      <section data-background-color="#89CFF3">
         <header>
           <h2 class="r-fit-text">
             Divulgación
@@ -884,6 +906,10 @@
           <li>Crédito a todos los involucrados</li>
         </ul>
 
+        <p style="text-align: right;">
+          <img src="img/github-mark.png" alt="" width="100">
+        </p>
+
         <aside class="notes">
           - Puedes crear un reporte de vulnerabilidad, y enviarlo al proyecto.
           - Los maintainer pueden clasificar el reporte como válido o no.
@@ -918,6 +944,9 @@
           </li>
         </ul>
 
+        <p style="text-align: right;">
+          <img src="img/github-mark.png" alt="" width="100">
+        </p>
         <aside class="notes">
 
           Explicar donde encontrar la pestaña de security,
@@ -931,7 +960,7 @@
         </aside>
       </section>
 
-      <section>
+      <section data-background-color="#89CFF3">
         <header>
           <h2 class="r-fit-text">Encontrando</h2>
           <h2 class="r-fit-text">Vulnerabilidades</h2>
@@ -945,7 +974,7 @@
         </aside>
       </section>
 
-      <section>
+      <section data-background-color="#1b998b">
         <h2>Encontrando vulnerabilidades</h2>
 
         <p>
