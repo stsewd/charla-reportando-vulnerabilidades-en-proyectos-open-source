@@ -1,0 +1,779 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Reportando vulnerabilidades en proyectos open source</title>
+
+  <link rel="stylesheet" href="node_modules/reveal.js/dist/reset.css">
+  <link rel="stylesheet" href="node_modules/reveal.js/dist/reveal.css">
+  <link rel="stylesheet" href="node_modules/reveal.js/dist/theme/white.css">
+
+  <!-- Theme used for syntax highlighting of code -->
+  <link rel="stylesheet" href="node_modules/highlight.js/styles/atom-one-light.css ">
+
+  <!-- Fontawewome -->
+  <link href="node_modules/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section class="center">
+        <header>
+          <h1>Reportando vulnerabilidades</h1>
+          <h2>en proyectos Open Source</h2>
+        </header>
+        <p>
+          <small>
+            Santos Gallegos
+            -
+            <a href="mailto:stsewd@proton.me">
+              stsewd@proton.me
+            </a>
+          </small>
+          <br>
+          <small>
+            @stsewd
+            <a href="http://github.com/stsewd"><i class="fab fa-github"></i></a>
+            <a href="http://twitter.com/stsewd"><i class="fab fa-twitter"></i></a>
+          </small>
+        </p>
+
+        <aside class="notes">
+          Probablemente me recuerden de charlas relacionadas con open source,
+          y la importancia de contribuir a ellos.
+          Bueno, esta es otra de esas charlas,
+          pero con un enfoque hacia la seguridad.
+        </aside>
+      </section>
+
+
+      <section>
+        <h2>$ WHOAMI</h2>
+        <ul>
+          <li>Web developer</li>
+          <li>Ethical hacker</li>
+          <li><i class="fab fa-python"></i> <i class="fab fa-rust"></i></li>
+          <li>
+            @stsewd - <a href="https://stsewd.dev/" target="_blank">https://stsewd.dev/</a>
+          </li>
+        </ul>
+
+        <p>
+          <img src="img/rtd-logo-vertical.png" width="400px">
+        </p>
+        <aside class="notes">
+          Hola, soy Santos Gallegos, soy desarrollador web, y hacker ético.
+          Principalmente trabajo con Python y Rust.
+          Actualmente trabajo en Read the Docs, soy core developer.
+          Me pueden encontrar en Internet como stsewd.
+        </aside>
+      </section>
+
+      <section>
+        <h2>Contribuyendo a proyectos open source</h2>
+
+        <section>
+          <ul>
+            <li>Código</li>
+            <li>Documentación</li>
+            <li>Traducciones</li>
+            <li>Reportando bugs</li>
+          </ul>
+
+          <aside class="notes">
+            Contribuir a proyectos open source es una excelente forma de
+            aprender, de hacer networking, de mejorar tu CV, y de ayudar a la
+            comunidad, de dejar de ser simplemente consumidores.
+
+            Se puede contribuir a un proyecto de muchas formas,
+            no necesariamente escribiendo código.
+            Por ejemplo, reportando bugs, respondiendo preguntas,
+            escribiendo documentación, traduciendo, etc.
+
+            Y una de las formas que vamos a ver hoy es reportando bugs, especialmente bugs de seguridad.
+          </aside>
+        </section>
+
+        <section>
+          <h2 class="r-fit-text">Reportando vulnerabilidades</h2>
+        </section>
+      </section>
+
+      <section>
+        <h2>Seguridad en proyectos Open source</h2>
+
+        <section>
+          <aside class="notes">
+            Siempre presumimos que los proyectos open source son más seguros que los proyectos privativos,
+            el código es público, todo el mundo puede verlo, por lo que introducir una vulnerabilidad es más difícil.
+            Pero no siempre es así.
+          </aside>
+        </section>
+
+        <section>
+          <h3>Vectores de ataque</h3>
+          <ul>
+            <li>
+              Acceso no autorizado al repositorio
+            </li>
+            <li>
+              Acceso no autorizado a la cuenta de un maintainer
+            </li>
+            <li>
+              Supply chain
+            </li>
+            <li>
+              Código malicioso en un pull request
+            </li>
+          </ul>
+
+          <aside class="notes">
+            Existen varios vectores de ataque, por ejemplo,
+            un atacante puede obtener acceso al repositorio,
+            robar las credenciales de un colaborador,
+            o enviar un PR intencionadamente con un bug de seguridad
+            (hubo el caso de una universidad que hizo esto con fines de investigación y fue baneada del kernel de
+            linux).
+            Supply chain attacks, que es cuando una dependencia directa o indirecta es comprometida.
+          </aside>
+        </section>
+
+        <section>
+          <p>
+            Bugs introducidos de manera no intencionada
+          </p>
+
+          <aside class="notes">
+            Hoy vamos a enfocarnos en bugs, errores que se introducen de manera no intencionada,
+            y que pueden llevar a una vulnerabilidad que podría comprometer la integridad, disponibilidad o
+            confidencialidad de un sistema.
+
+            Esto puede ser por desconocimiento, o por descuido. Errores pasan.
+
+            Los otros tipos vulnerabilidades también se pueden reportar, y seguir el mismo proceso,
+            en realidad, gran parte del proceso que vamos a ver se puede aplicar a proyectos que no son open source.
+
+            Y para poder seguir presumiendo de la seguridad de los proyectos open source,
+            es importante que ayudemos encontrando, reportando y arreglando estos bugs.
+          </aside>
+        </section>
+
+        <section>
+          <p>
+            Bugs introducidos de manera no intencionada
+          </p>
+
+          <pre class=""><code data-trim data-noescape class="python" data-line-numbers="1-5|3-5,7-8|3-5,10-11">
+            import subprocess
+
+            def clone(repo, destination):
+                # Código vulnerable a code injection.
+                subprocess.run(["git", "clone", repo, destination])
+
+            # Esto no funciona
+            clone("; touch /tmp/pwn;", "...")
+
+            # Esto si!
+            clone("--upload-pack=touch /tmp/pwn", "file:///foo")
+          </code></pre>
+
+          <aside class="notes">
+            Por ejemplo, este código es vulnerable a un ataque de command injection.
+            Pero Santos, ese código está usando subprocess.run, que no es vulnerable a command injection.
+            Correcto, no lo es, algo como esto no funcionaría.
+            Pero la forma en la que estamos invocando git es vulnerable,
+            ya que le podemos pasar a git la opción --upload-pack, esta puede ejecutar cualquier comando.
+        </section>
+
+        <section>
+          <p>
+            Bugs introducidos de manera no intencionada
+          </p>
+
+          <pre><code data-trim data-noescape class="python" data-line-numbers="4|">
+            import subprocess
+
+            def clone(repo, destination):
+                subprocess.run(["git", "clone", "--", repo, destination])
+
+            # Esto no funciona
+            clone("; touch /tmp/pwn;", "...")
+
+            # Esto tampoco!
+            clone("--upload-pack=touch /tmp/pwn", "file:///foo")
+          </code></pre>
+
+          <p>
+            <small>
+              <a href="https://github.com/gitpython-developers/GitPython/pull/1518">
+                https://github.com/gitpython-developers/GitPython/pull/1518
+              </a>
+            </small>
+          </p>
+
+          <aside class="notes">
+            La solución es usar -- para indicarle a git que no hay más opciones.
+            Los siguientes argumentos deben ser interpretados como argumentos posicionales.
+
+            Esta es una vulnerabilidad real, que reporté y ayudé a arreglar
+            en la librería GitPython.
+          </aside>
+        </section>
+      </section>
+
+      <section>
+        <h2>Reportando una vulnerabilidad</h2>
+
+        <aside class="notes">
+          A continuación vamos a ver los pasos a seguir para reportar un bug de seguridad en un proyecto open source,
+          hasta su resolución, divulgación y posible obtención de un CVE.
+
+          El primer paso es haber encontrado una vulnerabilidad.
+        </aside>
+      </section>
+
+      <section>
+        <h2 class="r-fit-text">
+          Confidencialidad
+        </h2>
+        <p>
+          Mantener la confidencialidad durante todo el proceso es importante
+        </p>
+      </section>
+
+      <section>
+        <header>
+          <h2>Confidencialidad</h2>
+          <h3>Lo que no debemos hacer</h3>
+        </header>
+        <ul>
+          <li>Contarle a todo el mundo</li>
+          <li>Publicarlo en redes sociales como linkedin o twitter</li>
+          <li>Crear un issue o PR en el repositorio</li>
+        </ul>
+
+        <aside class="notes">
+          Debemos asegurarnos de reportar el bug de manera confidencial,
+          por la plataforma que el proyecto nos indique.
+        </aside>
+      </section>
+
+      <section>
+        <h2 class="r-fit-text">
+          Verificación
+        </h2>
+        <p>
+          Asegúrate que la vulnerabilidad sea real
+        </p>
+      </section>
+
+      <section>
+        <h2>Verificación</h2>
+        <ul>
+          <li>Asegúrate de usar la última version o una versión soportada</li>
+          <li>
+            Lee la documentación del proyecto
+          </li>
+          <li>
+            Reproduce la vulnerabilidad en un entorno aislado
+          </li>
+          <li>
+            Asegúrate que el origen de la vulnerabilidad sea el proyecto que vas a reportar
+          </li>
+        </ul>
+
+        <aside class="notes">
+          Puede que la vulnerabilidad ya esté arreglada en la rama master o main del proyecto.
+          La última versión disponible en repositorios como npm, pypi, etc,
+          puede que no sea la última versión proyecto, revisa el lugar donde está alojado el código, como GitHub o
+          GitLab.
+
+          Lee la documentación del proyecto, puede que este caso ya esté documentado o tenga una explicación, o
+          advertencia sobre su uso.
+
+          Asegúrate que lo puedes reproducir en un entorno aislado, y que no sea un problema de tu entorno.
+          Aunque puede que sea válido si el bug solo se puede reproducir en ciertas condiciones.
+
+          Asegúrate que el origen del bug sea en el proyecto donde lo vas a reportar,
+          y no en una dependencia.
+
+          Otra vez, puede que sea válido si el bug solo se puede reproducir en ciertas condiciones.
+        </aside>
+      </section>
+
+      <section>
+        <h2 class="r-fit-text">
+          Política de seguridad
+        </h2>
+        <h2 class="r-fit-text">
+          Contacto
+        </h2>
+        <p>
+          Busca la política de seguridad, contacto, o medio adecuado para reportar la vulnerabilidad
+        </p>
+      </section>
+
+      <section>
+        <h2>Política / Contacto</h2>
+        <p>Repositorio del proyecto</p>
+        <ul>
+          <li><code>SECURITY.md</code></li>
+          <li><code>SECURITY.txt</code></li>
+          <li><code>README.md</code></li>
+        </ul>
+
+        <aside class="notes">
+          El primer lugar donde buscar es en el repositorio del proyecto,
+          especialmente en los siguientes archivos.
+
+          Si el repositorio está hospedado en GitHub,
+          en la parte superior del proyecto podemos encontrar una pestaña "Security",
+          donde se encuentra la política de seguridad del proyecto.
+        </aside>
+      </section>
+
+      <section>
+        <h2>Política / Contacto</h2>
+        <p>Documentación o web principal</p>
+        <ul>
+          <li>Realiza una búsqueda: security</li>
+          <li>
+            https://github.com<mark>/.well-known/security.txt</mark>
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Política de seguridad</h2>
+
+        <p class="r-fit-text">¡Léela!</p>
+      </section>
+
+      <section>
+        <header>
+          <h2><code>404</code></h2>
+          <h2><code>Contacto Not Found</code></h2>
+        </header>
+
+        <section>
+          <p>
+            Pregunta por el contacto en el repositorio
+          </p>
+
+
+          <ul>
+            <li>
+              Issue tracker
+            </li>
+            <li>
+              Lista de correos
+            </li>
+          </ul>
+          <p>
+            <strong>
+              ¡Recuerda no incluir detalles de la vulnerabilidad!
+            </strong>
+          </p>
+          <aside class="notes">
+            Si el proyecto no tiene una política de seguridad,
+            probablemente te darán un email donde reportar el bug.
+          </aside>
+        </section>
+
+        <section>
+          <p>
+            Busca un email de algún maintainer
+          </p>
+          <ul>
+            <li>
+              Documentación
+            </li>
+            <li>
+              Historial de commits
+            </li>
+          </ul>
+          <p>
+            <strong>
+              Asegúrate de que es la persona correcta
+              antes de incluir detalles de la vulnerabilidad.
+            </strong>
+          </p>
+        </section>
+        <aside class="notes">
+          No envíes el reporte sin antes asegurarte que es la persona correcta.
+          Y el medio adecuado para reportar la vulnerabilidad.
+        </aside>
+      </section>
+
+      <section>
+        <h2 class="r-fit-text">Reporte</h2>
+        <p>
+          Al final de la búsqueda, deberíamos tener un email o plataforma donde reportar la vulnerabilidad
+          de manera confidencial.
+        </p>
+      </section>
+
+      <section>
+        <h2>Reporte</h2>
+        <p>
+          Incluye la mayor cantidad de información posible
+        </p>
+        <ul>
+          <li>
+            Líneas de código afectadas o vulnerables
+          </li>
+          <li>
+            Proof of Concept (PoC)
+          </li>
+          <li>
+            Impacto
+          </li>
+          <li>
+            Sugerencias de como arreglar el bug
+          </li>
+        </ul>
+
+        <aside class="notes">
+          Dependiendo del proyecto, puede que tengamos disponible un template para reportar bugs de seguridad,
+          o puede que no. En cualquier caso, asegúrate de incluir la mayor cantidad de información posible,
+          para que los maintainers puedan reproducir el bug, puedes incluir un PoC (Proof of Concept),
+          sugerencias de como arreglar el bug, el impacto de la vulnerabilidad,
+          link al código vulnerable, versiones afectadas, o hasta sugerir un parche en tu reporte.
+        </aside>
+      </section>
+
+
+      <section>
+        <h2>Reporte</h2>
+
+        <p>Recuerda...</p>
+        <ul>
+          <li>
+            Confidencialidad
+          </li>
+          <li>
+            Sé paciente y amable, los maintainers son voluntarios
+          </li>
+          <li>
+            Como todo tipo de contribución,
+            reportar vulnerabilidad es una contribución voluntaria*
+          </li>
+        </ul>
+
+        <aside class="notes">
+          Cuando hayas enviado el reporte, puede que tengas una respuesta en un par de días en el mejor caso.
+
+          Recuerda no publicar nada hasta que la vulnerabilidad haya sido mitigada y publicada.
+
+          Recuerda, que al menos que el proyecto sea de alguna compañía,
+          los maintainers son voluntarios, nadie les paga por mantener el proyecto.
+          Sé paciente y amable, puede que la persona de contacto no esté familiarizada con el proceso
+          de reportar bugs de seguridad (en su mayoría son developers),
+          así que trata de no usar jerga de seguridad, y explica todo lo mejor posible.
+          Trata de hacer la vida de los maintainers lo más fácil posible.
+        </aside>
+      </section>
+
+      <section>
+        <header>
+          <h2 class="r-fit-text">Confirmación y</h2>
+          <h2 class="r-fit-text">Mitigación</h2>
+        </header>
+        <p>
+          Una vez que la vulnerabilidad haya sido confirmada, el siguiente paso es arreglarla.
+        </p>
+
+        <aside class="notes">
+          Una vez que la vulnerabilidad haya sido confirmada, el siguiente paso es arreglarla.
+          Este proceso usualmente es realizado de manera privada, y puede ser inmediata o puede tomar varios días o
+          semanas.
+          Puede que te pidan ayuda para verificar que la vulnerabilidad ha sido completamente mitigada, u opinión sobre
+          como arreglarla.
+
+          Recuerda no publicar nada hasta que la vulnerabilidad haya sido mitigada y publicada.
+        </aside>
+      </section>
+
+      <section>
+        <header>
+          <h2><code>404</code></h2>
+          <h2><code>Confirmación Not Found</code></h2>
+        </header>
+        <p>
+          Puedes hacer tu reporte público luego de 90 días,
+          es el estándar de la industria.
+        </p>
+
+        <aside class="notes">
+          Asegúrate que hayas intentado contactar a los maintainers por todos los medios posibles.
+          Si no recibes respuesta del proyecto dentro de 90 días, puedes hacer público el reporte.
+          90 días es el estándar de la industria. Pero puede que los maintainers te pidan más tiempo.
+          No porque no les contestaron en 2 días, significa que no les importa,
+          recuerda que los maintainers son voluntarios, y pueden tener otras prioridades.
+          No tienen la obligación de responder a tu reporte, o arreglar la vulnerabilidad.
+        </aside>
+      </section>
+
+      <section>
+        <header>
+          <h2 class="r-fit-text">
+            Divulgación
+          </h2>
+          <h2 class="r-fit-text">
+            Pública
+          </h2>
+        </header>
+        <p>
+          Los maintainers tienen la opción de reservar un CVE para la vulnerabilidad si lo consideran necesario.
+        </p>
+        <p>
+          Está bien pedir o recordar a los maintainers que te acrediten por reportar la vulnerabilidad.
+        </p>
+
+        <aside class="notes">
+          Y finalmente, una vez que la vulnerabilidad ha sido arreglada, puedes hacer público tu reporte.
+        </aside>
+      </section>
+
+      <section>
+        <h2 class="r-fit-text">Plataformas</h2>
+        <p>
+          Existen varias plataformas que son muy útiles parar las personas que reportan vulnerabilidades,
+          y para los maintainers.
+        </p>
+
+        <aside class="notes">
+          En la mayoría de casos que los proyectos no tienen una política de seguridad,
+          el proceso se da por email, pero proyectos que tienen una política de seguridad,
+          pueden usar una plataforma para reportar vulnerabilidades.
+          Existen varias plataformas que son muy útiles parar las personas que reportan vulnerabilidades,
+          y para los maintainers.
+        </aside>
+      </section>
+
+      <section>
+        <h2>Plataformas</h2>
+        <ul>
+          <li>
+            Snyk - <a href="https://snyk.io/">https://snyk.io/</a>
+          </li>
+          <li>
+            huntr.dev - <a href="https://huntr.dev/">https://huntr.dev/</a>
+          </li>
+          <li>
+            GitHub Advisories - <a
+              href="https://docs.github.com/code-security">https://docs.github.com/code-security</a>
+          </li>
+          <li>
+            hackerone - <a href="https://hackerone.com/">https://hackerone.com/</a>
+          </li>
+        </ul>
+
+        <aside class="notes">
+          Snyk te ayuda a contactar a los maintainers, a verificar la vulnerabilidad, y dan seguimiento a esta.
+
+          huntr.dev recientemente fue adquirida por una compañía,
+          y ahora solo aceptan reportes de vulnerabilidades en proyectos relacionados con AI.
+          Lo interesante de esta plataforma es que podías obtener recompensas por reportar vulnerabilidades,
+          y estas eran incluso repartidas con la persona que arreglo la vulnerabilidad.
+
+          GitHub Advisories es una plataforma de GitHub para reportar vulnerabilidades en proyectos open source.
+          Es muy completa, y su integración con el repositorio es muy buena.
+
+          hackerone es usualmente usada por compañías, pero también he visto un par de proyectos open source como Django
+          que la usan.
+          Yo no he tenido la oportunidad de reportar vulnerabilidades en esta plataforma, por ahora.
+
+          Todas estas plataformas facilitan la obtención de un CVE.
+
+          Si el proyecto no tiene una política de seguridad, puedes sugerirle al proyecto una,
+          o si no usa una de estas plataformas, puedes sugerirle al proyecto que las use.
+        </aside>
+      </section>
+
+      <section>
+        <h2 class="">GitHub Advisories</h2>
+
+        <ul>
+          <li>Reportes, clasificación</li>
+          <li>Discusiones privadas</li>
+          <li>Versiones afectadas</li>
+          <li>CWE, CVSS, CVE</li>
+          <li>Crédito a todos los involucrados</li>
+        </ul>
+
+        <aside class="notes">
+          - Puedes crear un reporte de vulnerabilidad, y enviarlo al proyecto.
+          - Los maintainer pueden clasificar el reporte como válido o no.
+          - Se pueden crear discusiones sobre el reporte. Todas esa discusiones son privadas.
+          - Se pueden invitar a otras personas a participar en la discusión.
+          - Te permite clasificar la severidad de la vulnerabilidad usando CVSS.
+          - Permite adjuntar CWEs al reporte.
+          - Permite a los maintainers asignar un CVE a la vulnerabilidad.
+          - Permite especificas las versiones afectadas.
+          - Permite dar crédito a la persona que reportó la vulnerabilidad,
+          a la que la arregló, y a la que la verificó, etc.
+        </aside>
+      </section>
+
+      <section>
+        <header>
+          <h2>GitHub advisories</h2>
+          <h2>Demo</h2>
+        </header>
+        <ul>
+          <li>
+            <a
+              href="https://github.com/stsewd/charla-reportando-vulnerabilidades-en-proyectos-open-source/">https://github.com/stsewd/charla-reportando-vulnerabilidades-en-proyectos-open-source/</a>
+          </li>
+          <li>
+            <a
+              href="https://github.com/neovim/neovim/security/advisories/GHSA-6f9m-hj8h-xjgj">https://github.com/neovim/neovim/security/advisories/GHSA-6f9m-hj8h-xjgj</a>
+          </li>
+          <li>
+            <a
+              href="https://github.com/gitpython-developers/GitPython/security/advisories/GHSA-cwvm-v4w8-q58c">https://github.com/gitpython-developers/GitPython/security/advisories/GHSA-cwvm-v4w8-q58c</a>
+          </li>
+        </ul>
+
+        <aside class="notes">
+
+          Explicar donde encontrar la pestaña de security,
+          y como crear un reporte de vulnerabilidad, y explicar cada campo.
+
+          Mostrar esta vulnerabilidad, y explicar cada campo.
+          Un CVE no fue emitido.
+
+          Mostrar esta vulnerabilidad, y explicar cada campo.
+          Un CVE fue emitido.
+        </aside>
+      </section>
+
+      <section>
+        <header>
+          <h2 class="r-fit-text">Encontrando</h2>
+          <h2 class="r-fit-text">Vulnerabilidades</h2>
+        </header>
+
+        <aside class="notes">
+          Ahora que ya sabemos como reportar vulnerabilidades,
+          vamos a ver brevemente como encontrarlas.
+
+          El secreto milenario de como encontrar vulnerabilidades y obtener tu CVE.
+        </aside>
+      </section>
+
+      <section>
+        <h2>Encontrando vulnerabilidades</h2>
+
+        <p>
+          <span class="r-fit-text">EXPLORA Y LEE</span>
+          <span class="r-fit-text">CÓDIGO</span>
+        </p>
+
+        <aside class="notes">
+          Lo peor que puede pasar es que aprendas algo nuevo.
+          Es así de sencillo, y de difícil.
+          Si, puedes usar herramientas como fuzzers, scanners, y linters.
+
+          Ayuda mucho que estés familiarizado con las vulnerabilidades más comunes.
+
+          Configura tu editor o IDE, LSP, con lo que te sientas más cómodo,
+          y en lugar de estar viendo tiktoks, lee código.
+        </aside>
+      </section>
+
+      <section data-transition="zoom">
+        <h2>¡Tú también puedes hacerlo!</h2>
+        <p>
+          Hagamos los proyectos open source más seguros juntos
+        </p>
+
+        <p>
+          -
+        </p>
+
+        <div>
+          <h4>Referencias y recursos adicionales</h4>
+          <ul>
+            <li>
+              <a href="https://github.blog/2022-02-09-coordinated-vulnerability-disclosure-cvd-open-source-projects/">
+                Coordinated vulnerability disclosure for open source projects
+              </a>
+              <br>
+              <small>
+                https://github.blog/2022-02-09-coordinated-vulnerability-disclosure-cvd-open-source-projects/
+              </small>
+            </li>
+            <li>
+              <a href="https://cheatsheetseries.owasp.org/cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.html">
+                OWASP's vulnerability disclosure cheat sheet
+              </a>
+              <br>
+              <small>
+                https://cheatsheetseries.owasp.org/cheatsheets/Vulnerability_Disclosure_Cheat_Sheet.html
+              </small>
+            </li>
+          </ul>
+        </div>
+        <footer class="fragment">
+          <p>
+            <small>
+              <a href="https://stsewd.dev">
+                <span>
+                  Más sobre mi
+                </span>
+                <br />
+                <span>https://stsewd.dev</span>
+              </a>
+            </small>
+          </p>
+
+          <p>
+            <small>
+              <a href="https://github.com/stsewd/charla-reportando-vulnerabilidades-en-proyectos-open-source">
+                <span>
+                  Código fuente <i class="fas fa-code-branch"></i>
+                </span>
+                <br />
+                <span>https://github.com/stsewd/charla-reportando-vulnerabilidades-en-proyectos-open-source</span>
+              </a>
+            </small>
+          </p>
+
+          <p>
+            <small>
+              @stsewd
+              <a href="http://github.com/stsewd"><i class="fab fa-github"></i></a>
+              <a href="http://twitter.com/stsewd"><i class="fab fa-twitter"></i></a>
+            </small>
+          </p>
+        </footer>
+      </section>
+    </div>
+  </div>
+
+  <script src="node_modules/reveal.js/dist/reveal.js"></script>
+  <script src="node_modules/reveal.js/plugin/notes/notes.js"></script>
+  <script src="node_modules/reveal.js/plugin/markdown/markdown.js"></script>
+  <script src="node_modules/reveal.js/plugin/highlight/highlight.js"></script>
+  <script>
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
+    Reveal.initialize({
+      hash: true,
+      maxScale: 0.7,
+      width: 1060,
+      height: 800,
+      // Learn about plugins: https://revealjs.com/plugins/
+      plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+    });
+  </script>
+</body>
+
+</html>
