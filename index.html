@@ -516,6 +516,12 @@
         </aside>
       </section>
 
+      <section data-background-color="#da5552">
+        <h2>Ejemplo 🐛</h2>
+        <p>Cache poisoning</p>
+        <img src="img/cache-poisoning.png">
+      </section>
+
       <section data-background-color="#1b998b">
         <h2>Ejemplo 🐛</h2>
         <p>
@@ -1018,6 +1024,7 @@
           <li>Familiarízate con el código del proyecto</li>
           <li>Lee las vulnerabilidades reportadas anteriormente</li>
           <li>Chequea vulnerabilidades similares en/de otros proyectos</li>
+          <li>Lee sobre las vulnerabilidades más comunes en el lenguaje o tecnologías usadas en el proyecto</li>
         </ul>
 
         <aside class="notes">
@@ -1025,6 +1032,82 @@
           empieza por proyectos que uses, o que te interesen.
           Lee los reportes anteriores, y trata de encontrar vulnerabilidades similares.
         </aside>
+      </section>
+
+      <section data-background-image="img/finding-bugs.png" data-background-size="300px" data-background-opacity="0.3">
+        <h2>Encontrando vulnerabilidades</h2>
+        <ul>
+          <li>Revisa todos los entry points que reciban input de usuarios</li>
+          <li>
+            Busca llamadas a funciones peligrosas
+            <ul>
+              <li>
+                exec, eval, system, shell_exec, etc
+              </li>
+              <li>
+                regex, format
+              </li>
+              <li>
+                open, read, write, etc
+              </li>
+              <li>
+                mark_safe, format_html, etc
+              </li>
+            </ul>
+          </li>
+          <li>
+            <code>grep</code> es tu mejor amigo
+          </li>
+        </ul>
+      </section>
+
+      <section data-background-color="#da5552">
+        <!--🦗🐝🕷️🐛🦋🪰🦟🐌🦠🦗🪲🦋🐝-->
+        <h2>Ejemplo 🐜</h2>
+        <p>
+          Llamada a función peligrosa
+        </p>
+
+        <pre class=""><code data-trim data-noescape class="python" data-line-numbers="1-4|1-4,6-8|1-4,10-11">
+            import re
+
+            def contains(word, text):
+                return bool(re.search(word, text, re.IGNORECASE))
+
+            # Retorna True
+            contains("hola", "Hola mundo")
+            contains("HolA", "Hola mundo")
+
+            # La función tarda mucho tiempo en ejecutarse.
+            contains("(a|a)*b", "Holaaaaaaaaaaaaaaaaaaaaaaaaa mundo")
+          </code></pre>
+      </section>
+
+      <section data-background-color="#1b998b">
+        <h2>Ejemplo 🐜</h2>
+        <p>
+          Llamada a función peligrosa
+        </p>
+
+        <pre><code data-trim data-noescape class="python" data-line-numbers="1-2|">
+            def contains(word, text):
+                return word.lower() in text.lower()
+
+            # Retorna True
+            contains("hola", "Hola mundo")
+            contains("HolA", "Hola mundo")
+
+            # Retorna False
+            contains("(a|a)*b", "Holaaaaaaaaaaaaaaaaaaaaaaaaa mundo")
+          </code></pre>
+
+        <p>
+          <small>
+            <a style="color: white;" href="https://github.com/advisories/GHSA-wj85-w4f4-xh8h">
+              https://github.com/advisories/GHSA-wj85-w4f4-xh8h
+            </a>
+          </small>
+        </p>
       </section>
 
       <section data-transition="zoom">
