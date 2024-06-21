@@ -69,9 +69,10 @@
           Hola, soy Santos Gallegos, soy desarrollador web, y hacker ético.
           Contribuyo activamente a proyectos open source,
           y he reportado vulnerabilidades en varios proyectos dentro y fuera de mi trabajo,
-          como vim, neovim, gitpython.
+          como neovim, gitpython, django-allauth, Read the Docs, y un montón más.
           Principalmente trabajo con Python y Rust.
           Actualmente trabajo en Read the Docs, soy core developer.
+          De vez en cuando también hago bug bounty.
           Me pueden encontrar en Internet como stsewd.
         </aside>
       </section>
@@ -126,7 +127,9 @@
         <aside class="notes">
           Siempre presumimos que los proyectos open source son más seguros que los proyectos privativos,
           el código es público, todo el mundo puede verlo, por lo que introducir una vulnerabilidad es más difícil.
-          Pero no siempre es así.
+
+          Probablemente se les venga a la mente un proyecto como Linux, con una comunidad muy grande
+          pendiente de todos los cambios.
 
           Ahí les dejo un artículo de Snyk, sobre el estado de la seguridad en proyectos open source en 2023.
         </aside>
@@ -137,7 +140,9 @@
         <img src="img/xkcd-dependency.png" alt="">
 
         <aside class="notes">
-          La realidad es esta, muchas veces una sóla persona es la que mantiene un proyecto.
+          Pero la realidad no es así. Usualmente es una sola persona la que mantiene el proyecto
+          en su tiempo libre. Eso no está bien, así que hoy vamos a ver una manera en la que todos
+          podemos ayudar, reportando vulnerabilidades.
         </aside>
       </section>
 
@@ -168,8 +173,8 @@
           puede ser por un leak de credenciales,
           take over de una cuenta de correo,
           por ello es importante usar autenticación de dos factores.
-          Un atacante puede enviar un PR intencionadamente con un vulnerabilidad
-          (hubo el caso de una universidad que hizo esto con fines de investigación y fue baneada del kernel de Linux).
+          Un atacante puede enviar un PR intencionadamente con un vulnerabilidad.
+          Curiosamente hubo el caso de una universidad que hizo esto con fines de "investigación" y fue baneada del kernel de Linux.
           Supply chain attacks, que es cuando una dependencia directa o indirecta es comprometida.
         </aside>
       </section>
@@ -182,16 +187,18 @@
 
         <aside class="notes">
           Hoy vamos a enfocarnos en bugs que se introducen de manera no intencionada,
-          y que pueden llevar a una vulnerabilidad que podría comprometer la integridad, disponibilidad o
-          confidencialidad de un sistema.
+          y que pueden llevar a una vulnerabilidad que podría comprometer la integridad, confidencialidad,
+          o disponibilidad de un sistema.
 
           Esto puede ser por desconocimiento, o por descuido. Errores pasan.
+          Somos errores, todos cometemos humanos.
 
           Los otros tipos vulnerabilidades también se pueden reportar, y seguir el mismo proceso,
           en realidad, gran parte del proceso que vamos a ver se puede aplicar a proyectos que no son open source.
 
           Y para poder seguir presumiendo de la seguridad de los proyectos open source,
           es importante que ayudemos encontrando, reportando y arreglando vulnerabilidades.
+          Incluso antes de que sean publicadas en un nuevo release, haciendo review de los parches.
           Entre más ojos mejor, la prevención es importante,
           y hasta el uso de herramientas como fuzzers, scanners, y linters.
         </aside>
@@ -289,7 +296,8 @@
 
         <aside class="notes">
           Mantener la confidencialidad durante todo el proceso es importante,
-          debemos mantener la vulnerabilidad en secreto hasta que haya sido mitigada y publicada.
+          debemos mantener la vulnerabilidad en secreto hasta que haya sido mitigada y publicada
+          por los maintainers del proyecto.
         </aside>
       </section>
 
@@ -676,7 +684,7 @@
             creando un issue o enviando un correo a la lista de correos.
 
             Recuerda que estos medios no son confidenciales,
-            no incluyas detalles de la vulnerabilidad.
+            son públicos, así que no incluyas detalles de la vulnerabilidad.
 
             Escribe algo como "Encontré una vulnerabilidad en el proyecto, ¿cual es el medio adecuado para reportarla?"
           </aside>
@@ -755,6 +763,7 @@
           para que los maintainers puedan reproducir el bug, puedes incluir un PoC (Proof of Concept),
           sugerencias de como arreglar el bug, el impacto de la vulnerabilidad,
           link al código vulnerable, versiones afectadas, o hasta sugerir un parche en tu reporte.
+          Hagamos la vida de los maintainers lo más fácil posible.
         </aside>
       </section>
 
@@ -790,6 +799,13 @@
           de reportar bugs de seguridad (en su mayoría son developers),
           así que trata de no usar jerga de seguridad, y explica todo lo mejor posible.
           Trata de hacer la vida de los maintainers lo más fácil posible.
+
+          Ahora, ahí puse un asterisco, y es que si hay proyectos
+          open source que ofrecen recompensas, usualmente son de empresas,
+          pero también hay proyectos que no son parte de una
+          empresa y ofrecen recompensas, como el programa Internet Bug Bounty.
+          https://hackerone.com/ibb.
+          Ahí están proyectos como Django, Ruby, Node.
         </aside>
       </section>
 
@@ -857,6 +873,29 @@
         </aside>
       </section>
 
+      <section data-background-color="#89CFF3" data-background-image="img/verfication-badge.png"
+        data-background-size="700px" data-background-opacity="0.5">
+        <h2 class="r-fit-text">
+          Verificación
+        </h2>
+        <h3>re-verificación</h3>
+        <p>
+          Asegúrate que la vulnerabilidad haya sido arreglada
+        </p>
+
+        <aside class="notes">
+          Ya habíamos mencionado la verificación al principio,
+          esta es otro verificación, o re-verificación,
+          para asegurarnos que la vulnerabilidad haya sido realmente
+          arreglada.
+
+          Esto es algo que me pasó, el maintainer no estaba con mucho tiempo
+          y se apuró en lanzar la corrección, e hizo el anuncio y todo.
+          Pero el proyecto aún era vulnerable, por suerte me puse a leer el parche
+          y vi que el fix no era correcto.
+        </aside>
+      </section>
+
       <section>
         <h2 class="r-fit-text">Plataformas</h2>
         <p>
@@ -894,17 +933,16 @@
         <aside class="notes">
           Snyk te ayuda a contactar a los maintainers, a verificar la vulnerabilidad, y dan seguimiento a esta.
 
-          huntr.dev recientemente fue adquirida por una compañía,
+          huntr.dev fue adquirida por una compañía,
           y ahora solo aceptan reportes de vulnerabilidades en proyectos relacionados con AI.
           Lo interesante de esta plataforma es que podías obtener recompensas por reportar vulnerabilidades,
-          y estas eran incluso repartidas con la persona que arreglo la vulnerabilidad.
+          y estas eran incluso repartidas con la persona que arregló la vulnerabilidad.
 
           GitHub Advisories es una plataforma de GitHub para reportar vulnerabilidades en proyectos open source.
           Es muy completa, y su integración con el repositorio es muy buena.
 
           hackerone es usualmente usada por compañías, pero también he visto un par de proyectos open source como Django
           que la usan.
-          Yo no he tenido la oportunidad de reportar vulnerabilidades en esta plataforma, por ahora.
 
           Todas estas plataformas facilitan la obtención de un CVE.
 
@@ -939,7 +977,7 @@
           - Permite a los maintainers asignar un CVE a la vulnerabilidad.
           - Permite especificas las versiones afectadas.
           - Permite dar crédito a la persona que reportó la vulnerabilidad,
-          a la que la arregló, y a la que la verificó, etc.
+            a la que la arregló, y a la que la verificó, etc.
         </aside>
       </section>
 
@@ -990,7 +1028,7 @@
           Ahora que ya sabemos como reportar vulnerabilidades,
           vamos a ver brevemente como encontrarlas.
 
-          El secreto milenario de como encontrar vulnerabilidades y obtener tu CVE.
+          El secreto milenario de como encontrar vulnerabilidades y obtener tu primer CVE.
         </aside>
       </section>
 
@@ -1007,6 +1045,8 @@
           Lo peor que puede pasar es que aprendas algo nuevo.
           Es así de sencillo, y de difícil.
           Si, puedes usar herramientas como fuzzers, scanners, y linters.
+          Pero estas herramientas no infalibles, y muchas veces retornan muchos falsos positivos,
+          pero aún así son útiles.
 
           Ayuda mucho que estés familiarizado con las vulnerabilidades más comunes.
           De lo contrario puede que leas un código vulnerable y no te des cuenta.
@@ -1037,6 +1077,47 @@
       <section data-background-image="img/finding-bugs.png" data-background-size="300px" data-background-opacity="0.3">
         <h2>Encontrando vulnerabilidades</h2>
         <ul>
+          <li>
+            Top 10 OWASP
+            <br>
+            <small>
+              <a href="https://owasp.org/Top10/">https://owasp.org/Top10/</a>
+            </small>
+          </li>
+          <li>
+            Portswigger academy
+            <br>
+            <small>
+              <a href="https://portswigger.net/web-security">https://portswigger.net/web-security</a>
+            </small>
+          </li>
+          <li>
+            Bandit
+            <br>
+            <small>
+              <a href="https://bandit.readthedocs.io/en/latest/">https://bandit.readthedocs.io/en/latest/</a>
+            </small>
+          </li>
+          <li>
+            CodeQL
+            <br>
+            <small>
+              <a href="https://codeql.github.com/">https://codeql.github.com/</a>
+            </small>
+          </li>
+        </ul>
+
+        <aside class="notes">
+          Reportar vulnerabilidades es similar a contribuir a un proyecto open source,
+          empieza por proyectos que uses, o que te interesen.
+          Lee los reportes anteriores, y trata de encontrar vulnerabilidades similares.
+        </aside>
+      </section>
+
+
+      <section data-background-image="img/finding-bugs.png" data-background-size="300px" data-background-opacity="0.3">
+        <h2>Encontrando vulnerabilidades</h2>
+        <ul>
           <li>Revisa todos los entry points que reciban input de usuarios</li>
           <li>
             Busca llamadas a funciones peligrosas
@@ -1059,6 +1140,12 @@
             <code>grep</code> es tu mejor amigo
           </li>
         </ul>
+        <aside class="notes">
+          Funciones peligrosas,
+          realmente no me gusta llamarlas así, porque por si sólas
+          no lo son. Pueden llegar a ser peligrosas si no son usadas correctamente,
+          o si se las usa con un input no confiable.
+        </aside>
       </section>
 
       <section data-background-color="#da5552">
@@ -1116,12 +1203,10 @@
           Hagamos los proyectos open source más seguros juntos
         </p>
 
-        <p>
-          -
-        </p>
+        <img src="img/qr.png" width="200px">
 
         <div>
-          <h4>Referencias y recursos adicionales</h4>
+          <h6>Referencias y recursos adicionales</h6>
           <ul>
             <li>
               <a href="https://github.blog/2022-02-09-coordinated-vulnerability-disclosure-cvd-open-source-projects/">
@@ -1176,6 +1261,18 @@
             </small>
           </p>
         </footer>
+
+        <aside class="notes">
+          Ahí les dejo el enlace a esta presentación y a mi blog donde a veces escribo cosas. y también estan las vulnerabilidades
+
+          Eso fue todo por hoy, espero hayan aprendido algo nuevo. Ahora vamos a las
+          preguntas. Si algo no se entendió, es probablemente mi culpa, no lo expliqué
+          bien, así que siéntanse libres de preguntar algo incluso si ya lo
+          di en la presentación, y lo voy a tratar de aclarar.
+
+          En mi blog también pueden encontrar una lista de las vulnerabilidades
+          públicas que reportado, podemos hablar sobre eso más luego si desean.
+        </aside>
       </section>
     </div>
   </div>
